@@ -12,7 +12,7 @@ $(document).ready(function(){
             method: 'GET'
         }).then(function(response) {
             $('#cityDisplay').text(response.name);
-            $('#conditionIcon').attr('src', 'http://openweathermap.org/img/wn/' + response.weather[0].icon + '.png');
+            $('#conditionIcon').attr('src', 'https://openweathermap.org/img/wn/' + response.weather[0].icon + '.png');
             $('#temperature').text(((response.main.temp - 273.15) * 9/5 + 32).toFixed(1) + ' °F');
             $('#humidity').text(response.main.humidity + '%');
             $('#windSpeed').text(response.wind.speed + ' MPH');
@@ -21,7 +21,7 @@ $(document).ready(function(){
             var lon = response.coord.lon;
 
             $.ajax({
-                url: 'http://api.openweathermap.org/data/2.5/uvi?lat=' + lat + '&lon=' + lon + '&appid=9306053ba5900e4bb80891c550654eb4',
+                url: 'https://api.openweathermap.org/data/2.5/uvi?lat=' + lat + '&lon=' + lon + '&appid=9306053ba5900e4bb80891c550654eb4',
                 method: 'GET'
             }).then(function(response){
                 var uvi = response.value;
