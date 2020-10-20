@@ -43,7 +43,7 @@ $(document).ready(function(){
                 var $citySearch = $('<p class="border border-dark p-1 m-0 rounded">' + response.name + '</p>');
                 $('#previousSearches').prepend($citySearch);
             }
-            
+
             localStorage.setItem('City Search', response.name);
         });
 
@@ -78,7 +78,11 @@ $(document).ready(function(){
     });
 
 
-
+    $('#previousSearches').on('click', function(e) {
+        if ($(e.target).is('p')) {
+            getWeatherInfo($(e.target).text());
+        }
+    })
 
 
 
