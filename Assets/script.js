@@ -57,5 +57,14 @@ $(document).ready(function(){
                 j = j + 8;
             }
         });
+
+        var m = moment().format('l');
+        $('#today').text(m);
+
+        for (i = 0; i < $('.card-body').length; i++) {
+            var day = moment().add( (i + 1), 'day').format('l');
+            console.log(day);
+            $('.card-body').eq(i).children('h4').text(day);
+        }
     });
 });
