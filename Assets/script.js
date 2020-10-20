@@ -65,7 +65,7 @@ $(document).ready(function(){
         var m = moment().format('l');
         $('#today').text(m);
         for (i = 0; i < $('.card-body').length; i++) {
-            var day = moment().add( (i + 1), 'day').format('l');
+            var day = moment().add( (i + 1), 'day').format('M/D');
             $('.card-body').eq(i).children('h4').text(day);
         }
     }
