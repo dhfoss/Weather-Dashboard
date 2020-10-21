@@ -28,7 +28,6 @@ $(document).ready(function(){
     $('#previousSearches').on('click', function(e) {
         if ($(e.target).is('p')) {
             getWeatherInfo($(e.target).text());
-            localStorage.removeItem('');
         }
     });
 
