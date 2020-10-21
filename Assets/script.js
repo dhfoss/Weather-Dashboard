@@ -17,6 +17,30 @@ $(document).ready(function(){
         getWeatherInfo(localStorage.getItem('Last Search'));
     }
 
+    // This sends the input value to the getWeatherInfo function.
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+        getWeatherInfo($(this).children('input').val().trim());
+        $(this).children('input').val('');
+    });
+
+    // Click the previous searches to pull up the data of the search
+    $('#previousSearches').on('click', function(e) {
+        if ($(e.target).is('p')) {
+            getWeatherInfo($(e.target).text());
+            localStorage.removeItem('');
+        }
+    });
+
+    // This button clears the search history, but keeps the current search displayed
+    $('#clearButton').on('click', function(e) {
+        e.preventDefault();
+        $('#previousSearches').empty();
+        citySearches = []
+        localStorage.removeItem('Last Search');
+        localStorage.removeItem('City Searches');
+    });
+
     // This function gets info from Open Weather Map and moment.js and displays it to the page.
     function getWeatherInfo (cityQuery) {
 
@@ -33,6 +57,7 @@ $(document).ready(function(){
             var lat = response.coord.lat;
             var lon = response.coord.lon;
 
+            // This ajax search gets the UV index
             $.ajax({
                 url: 'https://api.openweathermap.org/data/2.5/uvi?lat=' + lat + '&lon=' + lon + '&appid=9306053ba5900e4bb80891c550654eb4',
                 method: 'GET'
@@ -51,8 +76,12 @@ $(document).ready(function(){
                 uviDisplay.text(uvi);
             });
 
+            // This saves the latest search into local storage. It is not included in the loop below because I want the website to remember
+            // the last city searched even if it's been searched previously.
             localStorage.setItem('Last Search', response.name);
 
+            // This goes through the search history and sees if the current city has already been searched for. If not, it is included in the
+            // array of searches, and updates the local storage.
             if (!($('#previousSearches').children('p').text()).includes(response.name)) {
                 citySearches.push(response.name);
                 var citySearchesString = JSON.stringify(citySearches);
@@ -85,27 +114,4 @@ $(document).ready(function(){
         }
     }
 
-    // This sends the input value to the getWeatherInfo function.
-    $('form').on('submit', function(e) {
-        e.preventDefault();
-        getWeatherInfo($(this).children('input').val().trim());
-        $(this).children('input').val('');
-    });
-
-    // This button clears the search history, but keeps the current search displayed
-    $('#clearButton').on('click', function(e) {
-        e.preventDefault();
-        $('#previousSearches').empty();
-        citySearches = []
-        localStorage.removeItem('Last Search');
-        localStorage.removeItem('City Searches');
-    });
-
-    // Click the previous searches to pull up the data of the search
-    $('#previousSearches').on('click', function(e) {
-        if ($(e.target).is('p')) {
-            getWeatherInfo($(e.target).text());
-            localStorage.removeItem('');
-        }
-    });
 });
